@@ -1,0 +1,42 @@
+body{
+  font-family: Arial, sans-serif;
+}
+.container{
+  width: 600px;
+  margin: 0 auto;
+}
+h1{
+  text-align: center;
+}
+form {
+  border: 1px solid #000;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: inline-block;
+  width: 150px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 8px;
+}
+.form-group input[type="radio"] {
+  width: auto;
+}
+.form-group .gender {
+  display: inline-block;
+  margin-right: 10px;
+}
+.submit-btn {
+  text-align: center;
+}
+.submit-btn input {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}

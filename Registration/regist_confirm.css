@@ -1,0 +1,65 @@
+body{
+  font-family: Arial, sans-serif;
+}
+
+.confirm {
+  width: 600px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  width: 30%;
+}
+
+p {
+  width: 65%;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+input[type="hidden"] {
+  display: none;
+}
+
+.btn-submit,
+button[type="button"] {
+  width: 45%;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #000;
+  background-color: #fff;
+  text-align: center;
+}
+
+.btn-submit:hover,
+button[type="button"]:hover {
+  background-color: #f0f0f0;
+}
+
+.form-group-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+}

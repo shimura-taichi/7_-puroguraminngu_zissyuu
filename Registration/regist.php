@@ -118,7 +118,7 @@
 
       <div class="form-group">
         <label for="address_2">住所（番地）:</label>
-        <input type="text" id="address_2" name="address_" maxlength="100" value="" required>
+        <input type="text" id="address_2" name="address_2" maxlength="100" value="" required>
       </div>
 
       <div class="form-group">
