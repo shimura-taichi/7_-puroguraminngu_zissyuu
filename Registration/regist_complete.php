@@ -3,6 +3,8 @@
 
  $pdo = new PDO("mysql:dbname=lesson2;host=localhost;","root","");
 
+ $pdo -> exec("insert into registration(id,family_name,last_name,mail,password,gender,postal_code,prefecture,address_1,address_2,authority,delete_flag,registered_time,update_time)
+ values('".$_POST['id']."','".$_POST['family_name']."','".$_POST['last_name']."','".$_POST['mail']."','".$_POST['password']."','".$_POST['gender']."','".$_POST['postal_code']."','".$_POST['prefecture']."','".$_POST['address_1']."','".$_POST['address_2']."','".$_POST['authority']."','".$_POST['delete_flag']."','".$_POST['registered_time']."','".$_POST['update_time']."');");
 
 ?>
 

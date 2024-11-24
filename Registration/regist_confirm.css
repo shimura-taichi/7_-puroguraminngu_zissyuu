@@ -4,9 +4,9 @@ body{
 
 .confirm {
   width: 600px;
-  border: 1px solid #ccc;
+  border: 1px solid lightgrey;
   padding: 20px;
-  background-color: #fff;
+  background-color: white;
 }
 
 h1 {
@@ -29,7 +29,7 @@ label {
 p {
   width: 65%;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid lightgrey;
   padding: 5px 0;
 }
 
@@ -42,14 +42,14 @@ button[type="button"] {
   width: 45%;
   padding: 10px;
   cursor: pointer;
-  border: 1px solid #000;
-  background-color: #fff;
+  border: 1px solid black;
+  background-color: white;
   text-align: center;
 }
 
 .btn-submit:hover,
 button[type="button"]:hover {
-  background-color: #f0f0f0;
+  background-color: gainsboro;
 }
 
 .form-group-buttons {
@@ -61,5 +61,5 @@ button[type="button"]:hover {
 .footer {
   text-align: center;
   margin-top: 20px;
-  color: #777;
+  color: gray;
 }

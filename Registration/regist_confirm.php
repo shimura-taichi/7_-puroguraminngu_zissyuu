@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -44,7 +45,7 @@
 
             <div class="form-group">
                 <label>性別:</label>
-                <?php echo $_POST['gender'] == '男' ? '男性' : '女性'; ?>
+                <?php echo $_POST['gender'] ?? '未選択'; ?>
             </div>
 
             <div class="form-group">
@@ -54,7 +55,7 @@
 
             <div class="form-group">
                 <label>住所 (都道府県):</label>
-                <?php echo $_POST['prefecture']; ?>
+                <?php echo $_POST['prefecture'] ?? '未選択'; ?>
             </div>
 
             <div class="form-group">
@@ -81,9 +82,9 @@
                     <input type="hidden" name="last_name_kana" value="<?php echo $_POST['last_name_kana']; ?>">
                     <input type="hidden" name="mail" value="<?php echo $_POST['mail']; ?>">
                     <input type="hidden" name="password" value="<?php echo $_POST['password']; ?>">
-                    <input type="hidden" name="gender" value="<?php echo $_POST['gender']; ?>">
-                    <input type="hidden" name="postal_code" value="<?php echo $_POST['postal_code']; ?>">
-                    <input type="hidden" name="prefecture" value="<?php echo $_POST['prefecture']; ?>">
+                    <input type="hidden" name="gender" value="<?php echo $_POST['gender']?? ''; ?>">
+                    <input type="hidden" name="postal_code" value="<?php echo $_POST['postal_code']?? ''; ?>">
+                    <input type="hidden" name="prefecture" value="<?php echo $_POST['prefecture']?? ''; ?>">
                     <input type="hidden" name="address_1" value="<?php echo $_POST['address_1']; ?>">
                     <input type="hidden" name="address_2" value="<?php echo $_POST['address_2']; ?>">
                     <input type="hidden" name="authority" value="<?php echo $_POST['authority']; ?>">
