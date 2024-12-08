@@ -1,3 +1,83 @@
+<?php
+    session_start();
+
+    $errors = [];
+
+      
+      //↓未記入、未選択の場合、メッセージが表示される
+
+      if (empty($_POST['family_name'])){
+        $errors['family_name'] = '名前（姓）が未入力です';
+      }elseif(!preg_match("/[\p{Hiragana}\p{Han}]+/u", $_POST['family_name'])){
+        $errors['family_name'] = '名前（姓）を正しく入力してください。';
+      }
+  
+      if(empty($_POST['last_name'])){
+        $errors['last_name'] = '名前（名）が未入力です';
+      }elseif(!preg_match("/[\p{Hiragana}\p{Han}]+/u", $_POST['last_name'])){
+        $errors['last_name'] = '名前（名）を正しく入力してください。';
+      }
+  
+      if(empty($_POST['family_name_kana'])){
+        $errors['family_name_kana'] = 'カナ（姓）が未入力です';
+      }elseif(!preg_match("/[\p{Katakana}]+/u", $_POST['family_name_kana'])){
+        $errors['family_name_kana'] = 'カナ（姓）は全角カタカナで入力してください。';
+      }
+  
+      if(empty($_POST['last_name_kana'])){
+        $errors['last_name_kana'] = 'カナ（名）が未入力です';
+      }elseif(!preg_match("/[\p{Katakana}]+/u", $_POST['last_name_kana'])){
+        $errors['last_name_kana'] = 'カナ（名）は全角カタカナで入力してください。';
+      }
+  
+      if(empty($_POST['mail'])){
+        $errors['mail'] = 'メールアドレスが未入力です';
+      }elseif(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)){
+        $errors['mail'] = 'メールアドレスを正しく入力してください。';
+      }
+  
+      if(empty($_POST['password'])){
+        $errors['password'] = 'パスワードが未入力です';
+      }elseif(!preg_match("/[A-Za-z0-9]+/", $_POST['password'])){
+        $errors['password'] = 'パスワードは半角英数字で入力してください。';
+      }
+  
+      if(empty($_POST['gender'])){
+        $errors['gender'] = '性別を選択してください';
+      }
+  
+      if(empty($_POST['postal_code'])){
+        $errors['postal_code'] = '郵便番号が未入力です';
+      }elseif(!preg_match("/^\d{7}$/", $_POST['postal_code'])){
+        $errors['postal_code'] = '郵便番号は7桁の数字で入力してください。';
+      }
+  
+      if(empty($_POST['prefecture'])){
+        $errors['prefecture'] = '住所（都道府県）が未選択です';
+      }
+  
+      if(empty($_POST['address_1'])){
+        $errors['address_1'] = '住所（市区町村）が未入力です';
+      }elseif(!preg_match("/^[\p{Hiragana}\p{Katakana}\p{Han}0-9ー\s]+$/u", $_POST['address_1'])) {
+        $errors['address_1'] = '住所（市区町村）はひらがな、漢字、カタカナ、数字、記号（ハイフンとスペース）のみ入力可能です。';
+      }
+      if(empty($_POST['address_2'])){
+        $errors['address_2'] = '住所（番地）が未入力です';
+      }elseif(!preg_match("/^[\p{Hiragana}\p{Katakana}\p{Han}0-9ー\s]+$/u", $_POST['address_2'])) {
+        $errors['address_2'] = '住所（市区町村）はひらがな、漢字、カタカナ、数字、記号（ハイフンとスペース）のみ入力可能です。';
+      }
+  
+      if(empty($_POST['authority'])){
+        $errors['authority'] = 'アカウント権限を選択してください';
+      }
+      
+        // エラーがなければセッションにデータを保存し確認画面へリダイレクト
+        if (empty($errors)) {
+          $_SESSION['form_data'] = $_POST;
+           header("Location: regist_confirm.php");
+            exit;
+        }
+  ?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -11,105 +91,65 @@
   <div class="container">
     <h1>アカウント登録画面</h1>
 
-    <?php
-      $errors = [];
-            
-        if(!empty($_POST['family_name'])){
-          $errors['family_name'] = '名前（姓）が未入力です';
-        }
+
+    <form action="" method="POST"  novalidate>
+
+      <div class="form-group">
+        <label for="family_name">名前（姓）</label>
+        <input type="text" id="family_name" name="family_name" maxlength="10" value="<?php echo htmlspecialchars($_POST['family_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[\u3040-\u309F\u4E00-\u9FFF]+">
+        <?php if (!empty($errors['family_name'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['family_name']; ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div class="form-group">
+        <label for="last_name">名前（名）</label>
+        <input type="text" id="last_name" name="last_name" maxlength="10" value="<?php echo htmlspecialchars($_POST['last_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[\u3040-\u309F\u4E00-\u9FFF]+">
+
+        <?php if (!empty($errors['last_name'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['last_name']; ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div class="form-group">
+        <label for="family_name_kana">カナ（姓）</label>
+        <input type="text" id="family_name_kana" maxlength="10" value="<?php echo htmlspecialchars($_POST['family_name_kana'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" name="family_name_kana" required pattern="[\u30A0-\u30FF]+">
         
-        if(empty($_POST['last_name'])){
-          $errors['last_name'] = '名前（名）が未入力です';
-        }
-
-        if(empty($_POST['family_name_kana'])){
-          $errors['family_name_kana'] = 'カナ（姓）が未入力です';
-        }
-
-        if(empty($_POST['last_name_kana'])){
-          $errors['last_name_kana'] = 'カナ（名）が未入力です';
-        }
-
-        if(empty($_POST['mail'])){
-          $errors['mail'] = 'メールアドレスが未入力です';
-        }
-
-        if(empty($_POST['password'])){
-          $errors['password'] = 'パスワードが未入力です';
-        }
-
-        if(empty($_POST['gender'])){
-          $errors['gender'] = '性別を選択してください';
-        }
-
-        if(empty($_POST['postal_code'])){
-          $errors['postal_code'] = '郵便番号が未入力です';
-        }
-
-        if(empty($_POST['prefecture'])){
-          $errors['prefecture'] = '住所（都道府県）が未選択です';
-        }
-
-        if(empty($_POST['address_1'])){
-          $errors['address_1'] = '住所（市区町村）が未入力です';
-        }
-
-        if(empty($_POST['address_2'])){
-          $errors['address_2'] = '住所（番地）が未入力です';
-        }
-
-        if(empty($_POST['authority'])){
-          $errors['authority'] = 'アカウント権限を選択してください';
-        }
-
-    ?>
-
-    <form action="regist_confirm.php" method="POST"  novalidate>
-
-      <div class="form-group">
-        <label for="family_name">名前（姓）:</label>
-        <input type="text" id="family_name" name="family_name" maxlength="10" value="" required pattern="[\u3040-\u309F\u4E00-\u9FFF]+">
-
-        <p class="error" style="color: red;"><?php echo $errors['family_name']; ?></p>
+        <?php if (!empty($errors['family_name_kana'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['family_name_kana']; ?></p>
+        <?php endif; ?>
+        
       </div>
 
       <div class="form-group">
-        <label for="last_name">名前（名）:</label>
-        <input type="text" id="last_name" name="last_name" maxlength="10" value="" required pattern="[\u3040-\u309F\u4E00-\u9FFF]+">
+        <label for="last_name_kana">カナ（名）</label>
+        <input type="text" id="last_name_kana" maxlength="10" value="<?php echo htmlspecialchars($_POST['last_name_kana'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" name="last_name_kana" required pattern="[\u30A0-\u30FF]+">
 
-        <p class="error" style="color: red;"><?php echo $errors['last_name']; ?></p>
+        <?php if (!empty($errors['last_name_kana'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['last_name_kana']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="family_name_kana">カナ（姓）:</label>
-        <input type="text" id="family_name_kana" maxlength="10" value="" name="family_name_kana" required pattern="[\u30A0-\u30FF]+">
+        <label for="mail">メールアドレス</label>
+        <input type="mail" id="mail" name="mail" maxlength="100" value="<?php echo htmlspecialchars($_POST['mail'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
 
-        <p class="error" style="color: red;"><?php echo $errors['family_name_kana']; ?></p>
+        <?php if (!empty($errors['mail'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['mail']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="last_name_kana">カナ（名）:</label>
-        <input type="text" id="last_name_kana" maxlength="10" value="" name="last_name_kana" required pattern="[\u30A0-\u30FF]+">
+        <label for="password">パスワード</label>
+        <input type="password" id="password" name="password" maxlength="10" value="<?php echo htmlspecialchars($_POST['password'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[A-Za-z0-9]+">
 
-        <p class="error" style="color: red;"><?php echo $errors['last_name_kana']; ?></p>
+        <?php if (!empty($errors['password'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['password']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="mail">メールアドレス:</label>
-        <input type="mail" id="mail" name="mail" maxlength="100" value="" required pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
-
-        <p class="error" style="color: red;"><?php echo $errors['mail']; ?></p>
-      </div>
-
-      <div class="form-group">
-        <label for="password">パスワード:</label>
-        <input type="password" id="password" name="password" maxlength="10" value="" required pattern="[A-Za-z0-9]+">
-
-        <p class="error" style="color: red;"><?php echo $errors['password']; ?></p>
-      </div>
-
-      <div class="form-group">
-        <label>性別:</label>
+        <label>性別</label>
           <span class="gender">
             <input type="radio" id="gender" name="gender" value="男" <?php echo (!empty($_POST['gender']) && $_POST['gender'] === '男') ? 'checked' : ''; ?> required> 男
           </span>
@@ -117,18 +157,22 @@
             <input type="radio" id="gender" name="gender" value="女" <?php echo (!empty($_POST['gender']) && $_POST['gender'] === '女') ? 'checked' : ''; ?> required> 女
           </span>
 
+        <?php if (!empty($errors['gender'])): ?>
           <p class="error" style="color: red;"><?php echo $errors['gender']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-      <label for="postal_code">郵便番号:</label>
-        <input type="text" id="postal_code" name="postal_code" maxlength="7" value="" required>
+      <label for="postal_code">郵便番号</label>
+        <input type="text" id="postal_code" name="postal_code" maxlength="7" value="<?php echo htmlspecialchars($_POST['postal_code'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="\d{7}">
 
-        <p class="error" style="color: red;"><?php echo $errors['postal_code']; ?></p>
+        <?php if (!empty($errors['postal_code'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['postal_code']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="prefecture">住所（都道府県）:</label>
+        <label for="prefecture">住所（都道府県）</label>
         <select id="prefecture" name="prefecture" required>
         <option value="" disabled <?php echo empty($_POST['prefecture']) ? 'selected' : ''; ?>>都道府県を選択してください</option>
           <option value="北海道" <?php echo ($_POST['prefecture'] ?? '') === '北海道' ? 'selected' : ''; ?>>北海道</option>
@@ -180,31 +224,39 @@
           <option value="沖縄県" <?php echo ($_POST['prefecture'] ?? '') === '沖縄県' ? 'selected' : ''; ?>>沖縄県</option>
         </select>
         
-        <p class="error" style="color: red;"><?php echo $errors['prefecture']; ?></p>
+        <?php if (!empty($errors['prefecture'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['prefecture']; ?></p>
+        <?php endif; ?>
       </div>
         
       <div class="form-group">
-        <label for="address_1">住所（市区町村）:</label>
-        <input type="text" id="address_1" name="address_1" maxlength="10" value="" required>
+        <label for="address_1">住所（市区町村）</label>
+        <input type="text" id="address_1" name="address_1" maxlength="10" value="<?php echo htmlspecialchars($_POST['address_1'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF0-9ー\s]+">
 
-        <p class="error" style="color: red;"><?php echo $errors['address_1']; ?></p>
+        <?php if (!empty($errors['address_1'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['address_1']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="address_2">住所（番地）:</label>
-        <input type="text" id="address_2" name="address_2" maxlength="100" value="" required>
+        <label for="address_2">住所（番地）</label>
+        <input type="text" id="address_2" name="address_2" maxlength="100" value="<?php echo htmlspecialchars($_POST['address_2'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required pattern="[\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF0-9ー\s]+">
 
-        <p class="error" style="color: red;"><?php echo $errors['address_2']; ?></p>
+        <?php if (!empty($errors['address_2'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['address_2']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="form-group">
-        <label for="authority">アカウント権限:</label>
+        <label for="authority">アカウント権限</label>
         <select id="authority" name="authority" required>
         <option value="一般" <?php echo ($_POST['authority'] ?? '') === '一般' ? 'selected' : ''; ?>>一般</option>
         <option value="管理者" <?php echo ($_POST['authority'] ?? '') === '管理者' ? 'selected' : ''; ?>>管理者</option>
         </select>
 
-        <p class="error" style="color: red;"><?php echo $errors['authority']; ?></p>
+        <?php if (!empty($errors['authority'])): ?>
+          <p class="error" style="color: red;"><?php echo $errors['authority']; ?></p>
+        <?php endif; ?>
       </div>
 
       <div class="submit-btn">
@@ -215,3 +267,4 @@
   </div>
 </body>
 </html>
+

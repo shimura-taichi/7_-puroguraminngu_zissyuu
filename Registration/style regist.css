@@ -1,6 +1,10 @@
+
+
 body{
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif; 
 }
+
+
 .container{
   width: 600px;
   margin: 0 auto;
@@ -40,4 +44,6 @@ form {
   color: white;
   border: none;
 }
+
+
 
