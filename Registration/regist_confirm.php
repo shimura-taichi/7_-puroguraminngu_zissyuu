@@ -2,12 +2,12 @@
     session_start();
     $form_data = $_SESSION['form_data'];
 
-
 // セッションが空の場合、登録画面にリダイレクト
-    if (empty($_SESSION['form_data'])) {
+    if (empty($_SESSION['form_data'])) {   
         header('Location: regist.php');
         exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>アカウント登録確認画面</title>
-    <link rel="stylesheet" type="text/css" href="style regist_confirm.css">
+    <link rel="stylesheet" type="text/css" href="regist_confirm.css">
 </head>
 <body>
     <div class="confirm">
@@ -101,8 +101,8 @@
                     <input type="hidden" name="authority" value="<?php echo $form_data['authority']; ?>">
             </form>
             
-        <form action="regist.php" method="POST">
-            <button type="submit">前に戻る</button>
-        </form>
+            <form action="regist.php" method="POST">
+                <button type="submit">戻る</button>
+            </form>
         
 </body>
