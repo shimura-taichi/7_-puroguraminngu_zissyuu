@@ -32,15 +32,18 @@
           $errors['last_name_kana'] = 'カナ（名）は全角カタカナで入力してください。';
         }
   
-        if(empty($_POST['mail'])){
+        if(empty($_POST['mail']) || !isset($_POST['mail'])){
           $errors['mail'] = 'メールアドレスが未入力です';
-        }elseif(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)){
+        }elseif(!preg_match("/^[A-Za-z0-9@.-]+$/", $_POST['mail'])) { 
+          $errors['mail'] = 'メールアドレスは半角英数字、ハイフン、@、ピリオドのみ使用できます。';
+        }elseif (!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
           $errors['mail'] = 'メールアドレスを正しく入力してください。';
         }
+      
   
         if(empty($_POST['password'])){
           $errors['password'] = 'パスワードが未入力です';
-        }elseif(!preg_match("/[A-Za-z0-9]+/", $_POST['password'])){
+        }elseif(!preg_match("/^[A-Za-z0-9]+$/", $_POST['password'])){
           $errors['password'] = 'パスワードは半角英数字で入力してください。';
         }
   
@@ -63,10 +66,11 @@
         }elseif(!preg_match("/^[\p{Hiragana}\p{Katakana}\p{Han}0-9ー\s]+$/u", $_POST['address_1'])) {
           $errors['address_1'] = '住所（市区町村）はひらがな、漢字、カタカナ、数字、記号（ハイフンとスペース）のみ入力可能です。';
         }
+
         if(empty($_POST['address_2'])){
           $errors['address_2'] = '住所（番地）が未入力です';
         }elseif(!preg_match("/^[\p{Hiragana}\p{Katakana}\p{Han}0-9ー\s]+$/u", $_POST['address_2'])) {
-          $errors['address_2'] = '住所（市区町村）はひらがな、漢字、カタカナ、数字、記号（ハイフンとスペース）のみ入力可能です。';
+          $errors['address_2'] = '住所（番地）はひらがな、漢字、カタカナ、数字、記号（ハイフンとスペース）のみ入力可能です。';
         }
     
         if(empty($_POST['authority'])){
@@ -77,9 +81,8 @@
         if (empty($errors)) {
           header('Location: regist_confirm.php');
               exit;
-        }
-    } 
-
+      }
+    }
    //セッションに保存されたデータを取得（戻るボタン用）
    $form_data = $_SESSION['form_data'] ?? [];
 
