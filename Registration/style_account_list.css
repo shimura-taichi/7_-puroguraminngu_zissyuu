@@ -1,0 +1,65 @@
+/* ページ全体のスタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
+/* 見出しのスタイル */
+h1 {
+  text-align: center;
+  color: black
+}
+
+/* テーブルのスタイル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0px 4px 6px lightgrey;
+}
+
+/* テーブルのヘッダー */
+th {
+  background-color: whitesmoke;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid lightgrey;
+}
+
+/* テーブルのセル */
+td {
+  padding: 10px;
+  border: 1px solid lightgrey;
+}
+
+/* 偶数行の背景色 */
+tr:nth-child(even) {
+  background-color: white;
+}
+
+/* 更新・削除ボタン */
+.button {
+  padding: 5px 10px;
+  background-color: blue;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: mediumblue;
+}
+
+/* 削除ボタンのスタイル */
+.button.delete {
+  background-color: firebrick;
+}
+
+.button.delete:hover {
+  background-color: brown;
+}
